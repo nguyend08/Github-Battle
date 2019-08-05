@@ -1,7 +1,7 @@
 import React from 'react'
 import ReactDOM from 'react-dom'
 import './index.css'
-import Popular from '../components/Popular'
+import Popular from './components/Popular'
 
 //Component
 //State
@@ -13,6 +13,10 @@ class App extends React.Component {
     return ( 
       <div className = "container">
         <Popular />
+        <h1>Hello
+        </h1>
+
+        
       </div>
     )
   }
