@@ -13,10 +13,6 @@ class App extends React.Component {
     return ( 
       <div className = "container">
         <Popular />
-        <h1>Hello
-        </h1>
-
-        
       </div>
     )
   }
