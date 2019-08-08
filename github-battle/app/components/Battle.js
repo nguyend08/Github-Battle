@@ -1,8 +1,8 @@
-import React from 'react';
+import React from 'react'
 import { FaUserFriends, FaFighterJet, FaTrophy } from 'react-icons/fa'
-import PropTypes from 'prop-types';
+import PropTypes from 'prop-types'
 
-function Instructions() {
+function Instructions () {
   return (
     <div className='instructions-container'>
       <h1 className='center-text header-lg'>
@@ -11,7 +11,7 @@ function Instructions() {
       <ol className='container-sm grid center-text battle-instructions'>
         <li>
           <h3 className='header-sm'>Enter two Github users</h3>
-          <FaUserFriends className='bg-light' color='rgb(255,191,116)' size={140} />
+          <FaUserFriends className='bg-light' color='rgb(255, 191, 116)' size={140} />
         </li>
         <li>
           <h3 className='header-sm'>Battle</h3>
@@ -19,7 +19,7 @@ function Instructions() {
         </li>
         <li>
           <h3 className='header-sm'>See the winners</h3>
-          <FaTrophy className='bg-light' color='rgb(255,215,0)' size={140} />
+          <FaTrophy className='bg-light' color='rgb(255, 215, 0)' size={140} />
         </li>
       </ol>
     </div>
@@ -33,30 +33,28 @@ class PlayerInput extends React.Component {
     this.state = {
       username: ''
     }
-    this.handleSubmit = this.handleSubmit.bind(this);
-    this.handleChange = this.handleChange.bind(this);
-  }
 
+    this.handleSubmit = this.handleSubmit.bind(this)
+    this.handleChange = this.handleChange.bind(this)
+  }
   handleSubmit(event) {
     event.preventDefault()
 
     this.props.onSubmit(this.state.username)
   }
-
   handleChange(event) {
     this.setState({
       username: event.target.value
     })
   }
-
   render() {
     return (
       <form className='column player' onSubmit={this.handleSubmit}>
         <label htmlFor='username' className='player-label'>
           {this.props.label}
         </label>
-        <div className='row player-iputs'>
-          <input 
+        <div className='row player-inputs'>
+          <input
             type='text'
             id='username'
             className='input-light'
@@ -65,7 +63,7 @@ class PlayerInput extends React.Component {
             value={this.state.username}
             onChange={this.handleChange}
           />
-          <button 
+          <button
             className='btn dark-btn'
             type='submit'
             disabled={!this.state.username}
@@ -84,12 +82,46 @@ PlayerInput.propTypes = {
 }
 
 export default class Battle extends React.Component {
+  constructor(props) {
+    super(props)
+
+    this.state = {
+      playerOne: null,
+      playerTwo: null,
+    }
+
+    this.handleSubmit = this.handleSubmit.bind(this)
+  }
+  handleSubmit(id, player) {
+    this.setState({
+      [id]: player
+    })
+  }
   render() {
+    const { playerOne, playerTwo } = this.state
+
     return (
       <React.Fragment>
         <Instructions />
 
-        <PlayerInput label='label!' onSubmit={(value) => console.log('value', value)} />
+        <div className='players-container'>
+          <h1 className='center-text header-lg'>Players</h1>
+          <div className='row space-around'>
+            {playerOne === null && (
+              <PlayerInput
+                label='Player One'
+                onSubmit={(player) => this.handleSubmit('playerOne', player)}
+              />
+            )}
+
+            {playerTwo === null && (
+              <PlayerInput
+                label='Player Two'
+                onSubmit={(player) => this.handleSubmit('playerTwo', player)}
+              />
+            )}
+          </div>
+        </div>
       </React.Fragment>
     )
   }
