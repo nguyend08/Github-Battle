@@ -1,6 +1,6 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-import { fetchPopularRepos } from '../../utils/api'
+import { fetchPopularRepos } from '../utils/api'
 import { FaUser, FaStar, FaCodeBranch, FaExclamationTriangle} from 'react-icons/fa'
 
 function LanguagesNav ({selected, onUpdateLanguage}) {
