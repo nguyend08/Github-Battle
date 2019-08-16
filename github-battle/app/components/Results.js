@@ -9,7 +9,8 @@ import {
   FaUser
 } from "react-icons/fa";
 import Card from "./Card";
-import PropTypes from 'prop-types'
+import PropTypes from 'prop-types';
+import Loading from './Loading';
 
 function ProfileList({ profile }) {
   return(
@@ -80,7 +81,7 @@ export default class Results extends React.Component {
     const { winner, loser, error, loading } = this.state;
 
     if (loading === true) {
-      return <p>LOADING</p>;
+      return <Loading />
     }
 
     if (error) {
@@ -88,17 +89,18 @@ export default class Results extends React.Component {
     }
 
     return (
-      <div className="grid space-around container-sm">
-        <Card
+      <React.Fragment>
+        <div className="grid space-around container-sm">
+         <Card
           header={winner.score === loser.score ? "Tie" : "Winner"}
-          subheader={`Score: ${winner.score.toLocaleString()}`}
-          avatar={winner.profile.avatar_url}
-          href={winner.profile.html_url}
-          name={winner.profile.login}
-        >
+           subheader={`Score: ${winner.score.toLocaleString()}`}
+           avatar={winner.profile.avatar_url}
+           href={winner.profile.html_url}
+           name={winner.profile.login}
+         >
           <ProfileList profile={winner.profile}/>
-        </Card>
-        <Card
+         </Card>
+         <Card
           header={winner.score === loser.score ? "Tie" : "Loser"}
           subheader={`Score: ${loser.score.toLocaleString()}`}
           avatar={loser.profile.avatar_url}
@@ -108,6 +110,20 @@ export default class Results extends React.Component {
           <ProfileList profile={loser.profile}/>
         </Card>
       </div>
+      <button
+        className='btn dark-btn btn-space'
+        onClick={this.props.onReset}
+      >
+        Reset
+      </button>
+      </React.Fragment>
     );
   }
+}
+
+
+Results.propTypes = {
+  playerOne: PropTypes.string.isRequired,
+  playerTwo: PropTypes.string.isRequired,
+  onReset: PropTypes.func.isRequired
 }
